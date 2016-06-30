@@ -10,6 +10,14 @@ get('/') do
 end
 
 get('/result') do
-  @cents =  params['cents_entered'].to_i.coin_return()   #.fetch('cents_entered').coin_return().to_i()
-  erb(:coin_combinations)
+  @err = nil
+
+  if Integer(params['cents_entered'].to_i) == 0 && params['cents_entered'] != "0"
+    @err = "Argument not valid - #{params['cents_entered']}"
+    erb(:coin_combinations)
+  else
+    @cents = params['cents_entered'].to_i.coin_return()
+    erb(:coin_combinations)
+  end
+
 end
